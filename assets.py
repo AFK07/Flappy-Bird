@@ -3,6 +3,7 @@ import pygame
 
 # will be used to load images, where the keys will be the filenames and the values will be the corresponding image surfaces
 sprites = {}
+audios = {}
 
 def load_sprites():
 
@@ -18,3 +19,11 @@ def load_sprites():
 
 def get_sprite(name):           # retrieves images from the images directory
     return sprites[name]
+
+def load_audios():
+    path = os.path.join("assets", "audios")
+    for file in os.listdir(path):
+        audios[file.split('.')[0]] = pygame.mixer.Sound(os.path.join(path, file))
+
+def play_audio(name):           # retrieves images from the audios directory
+    audios[name].play()
