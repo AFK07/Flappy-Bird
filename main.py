@@ -143,6 +143,7 @@ class Bird(pygame.sprite.Sprite):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             self.flap = 0
             self.flap -= 6                      # when space is clicked, it will raise its position. speed depends on fps
+            assets.play_audio("wing")
         
     def check_collision(self, sprites):
         for sprite in sprites:
@@ -283,11 +284,12 @@ while running:                                  # runs until the running variabl
         sprites.update()
 
 
-    if bird.check_collision(sprites):           # checks collisions
+    if bird.check_collision(sprites) and not gameover:           # checks collisions
         gameover = True
         gamestarted = False
-        
         EndMessage(sprites)                     # if the collision is true, then the game over image shall be shown
+        pygame.time.set_timer(column_create_event, 0)
+        assets.play_audio("hit")
 
     for sprite in sprites:
         if type(sprite) is Column and sprite.is_passed():# sprite.is_passed() : is used to check whether the bird has passed through the column
